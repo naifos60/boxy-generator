@@ -4,26 +4,29 @@ import { useEffect } from "react";
 
 export default function ModalResult({ closeModal }) {
   const shadowValues = useSelector((state) => state.shadows);
+  const boxValues = useSelector((state) => state.boxProperties);
 
   useEffect(() => {
-    document.body.style.overflowY = 'hidden'
+    document.body.style.overflowY = "hidden";
 
-    return () => document.body.style.overflowY = 'auto'
-  }, [])
-  
-  let runningAnimation = false
+    return () => (document.body.style.overflowY = "auto");
+  }, []);
+
+  let runningAnimation = false;
   function handleCopy(e) {
     if (!runningAnimation) {
-      runningAnimation = true
-      e.target.textContent = "Copied !"
+      runningAnimation = true;
+      e.target.textContent = "Copied !";
 
       setTimeout(() => {
-        e.target.textContent = "Copy"
-        runningAnimation = false
-      },1250)
+        e.target.textContent = "Copy";
+        runningAnimation = false;
+      }, 1250);
     }
 
-    navigator.clipboard.writeText(`shadow-box: ${getBoxShadowValue(shadowValues)}`)
+    navigator.clipboard.writeText(
+      `shadow-box: ${getBoxShadowValue(shadowValues)}`
+    );
   }
   return (
     <div
@@ -38,7 +41,8 @@ export default function ModalResult({ closeModal }) {
           <p className="font-semibold mr-5">Here is your code 🎉</p>
           <button
             onClick={handleCopy}
-            className="ml-auto mr-2 text-sm bg-blue-600 text-white hover:bg-blue-700 py-1 px-3 rounded">
+            className="ml-auto mr-2 text-sm bg-blue-600 text-white hover:bg-blue-700 py-1 px-3 rounded"
+          >
             Copy
           </button>
           <button
@@ -48,10 +52,28 @@ export default function ModalResult({ closeModal }) {
             Close
           </button>
         </div>
-        <p className="bg-gray-100 px-4 py-4">
-          <span className="font-semibold text-md">Box-shadow :</span>
-          <span> {getBoxShadowValue(shadowValues)}</span>
-        </p>
+        <div className="bg-gray-100 px-4 py-4 flex flex-col gap-2">
+          <p>
+            <span className="font-semibold text-md">Box-shadow : </span>
+            <span> {getBoxShadowValue(shadowValues)}</span>
+          </p>
+          <p>
+            <span className="font-semibold text-md">Border-radius : </span>
+            <span> {boxValues[0].value}px;</span>
+          </p>
+          <p>
+            <span className="font-semibold text-md">Height : </span>
+            <span> {boxValues[1].value}px;</span>
+          </p>
+          <p>
+            <span className="font-semibold text-md">Width : </span>
+            <span> {boxValues[2].value}px;</span>
+          </p>
+          <p>
+            <span className="font-semibold text-md">Background-color : </span>
+            <span> {boxValues[3].value};</span>
+          </p>
+        </div>
       </div>
     </div>
   );
