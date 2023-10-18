@@ -25,7 +25,13 @@ export default function ModalResult({ closeModal }) {
     }
 
     navigator.clipboard.writeText(
-      `shadow-box: ${getBoxShadowValue(shadowValues)}`
+      `
+      shadow-box: ${getBoxShadowValue(shadowValues)}
+      border-radius: ${boxValues[0].value}px;
+      height: ${boxValues[1].value}px;
+      width: ${boxValues[2].value}px;
+      color: ${boxValues[3].value};
+       `
     );
   }
   return (
